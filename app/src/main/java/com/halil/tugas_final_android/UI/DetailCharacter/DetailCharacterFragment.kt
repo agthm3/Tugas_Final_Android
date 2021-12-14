@@ -1,5 +1,6 @@
 package com.halil.tugas_final_android.UI.DetailCharacter
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -47,6 +48,29 @@ class DetailCharacterFragment : Fragment() {
         val abilities = selectedCharacter!!.abilities as MutableList<Ability>
         Log.d(TAG, "abilities : ${abilities.size}")
         rcView_abilities.adapter = AbilityAdapter(abilities)
+
+        shareBtn.setOnClickListener {
+            var ability = ""
+            for((i, ab) in selectedCharacter!!.abilities.withIndex()) {
+                ability += "${i+1}.) ${ab.displayName} : ${ab.description}\n"
+            }
+
+            val text = "${selectedCharacter!!.displayName}\n" +
+                    "${selectedCharacter!!.description}\n\n" +
+                    "Role : ${selectedCharacter!!.role.displayName}\n\n" +
+                    "Abilities\n" +
+                    "$ability"
+
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(
+                    Intent.EXTRA_TEXT, text)
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
 
     }
 
