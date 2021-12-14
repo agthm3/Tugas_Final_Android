@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.halil.tugas_final_android.Model.Character
 import com.halil.tugas_final_android.R
 
 class DetailCharacterFragment : Fragment() {
@@ -21,5 +22,6 @@ class DetailCharacterFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = DetailCharacterFragment()
+        var selectedCharacter: Character? = null
     }
 }

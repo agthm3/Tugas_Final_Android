@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.halil.tugas_final_android.Model.Character
 import com.halil.tugas_final_android.R
+import com.halil.tugas_final_android.UI.DetailCharacter.DetailCharacterFragment
 import kotlinx.android.synthetic.main.fragment_list_character.*
 import kotlinx.coroutines.launch
 
@@ -25,7 +28,12 @@ class ListCharacterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CharacterAdapter()
+        adapter = CharacterAdapter(object : CharacterAdapter.Listener {
+            override fun onItemClick(character: Character) {
+                DetailCharacterFragment.selectedCharacter = character
+                findNavController().navigate(R.id.action_listCharacterFragment_to_detailCharacterFragment)
+            }
+        })
 
         rcView_characters.setHasFixedSize(true)
         rcView_characters.layoutManager = GridLayoutManager(requireContext(), 2)

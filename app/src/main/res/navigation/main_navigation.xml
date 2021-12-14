@@ -9,5 +9,14 @@
         android:id="@+id/listCharacterFragment"
         android:name="com.halil.tugas_final_android.UI.ListCharacter.ListCharacterFragment"
         android:label="fragment_list_character"
-        tools:layout="@layout/fragment_list_character" />
+        tools:layout="@layout/fragment_list_character" >
+        <action
+            android:id="@+id/action_listCharacterFragment_to_detailCharacterFragment"
+            app:destination="@id/detailCharacterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailCharacterFragment"
+        android:name="com.halil.tugas_final_android.UI.DetailCharacter.DetailCharacterFragment"
+        android:label="fragment_detail_character"
+        tools:layout="@layout/fragment_detail_character" />
 </navigation>

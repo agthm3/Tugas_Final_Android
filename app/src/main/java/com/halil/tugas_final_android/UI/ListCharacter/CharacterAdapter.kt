@@ -9,18 +9,25 @@ import com.halil.tugas_final_android.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_character.view.*
 
-class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.Holder>() {
+class CharacterAdapter(private val listener: CharacterAdapter.Listener): RecyclerView.Adapter<CharacterAdapter.Holder>() {
+
+    interface Listener {
+        fun onItemClick(character: Character)
+    }
 
     private var listCharacter = mutableListOf<Character>()
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bind(character: Character) {
+        fun bind(character: Character, listener: Listener) {
             with(itemView) {
                 Picasso.get()
                     .load(character.fullPortrait)
                     .into(img)
 
                 name.text = character.displayName
+                this.setOnClickListener {
+                    listener.onItemClick(character)
+                }
             }
         }
     }
@@ -36,7 +43,7 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        return holder.bind(listCharacter[position])
+        return holder.bind(listCharacter[position], listener)
     }
 
     override fun getItemCount(): Int {
