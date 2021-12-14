@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface Endpoint {
 
-    @GET("/agents")
+    @GET("v1/agents")
     suspend fun getCharacters(): Response<DataCharacter>
 
 }

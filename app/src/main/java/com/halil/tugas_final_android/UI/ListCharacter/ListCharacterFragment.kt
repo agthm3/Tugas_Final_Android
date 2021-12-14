@@ -5,16 +5,35 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import com.halil.tugas_final_android.R
+import kotlinx.android.synthetic.main.fragment_list_character.*
+import kotlinx.coroutines.launch
 
 class ListCharacterFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private lateinit var viewModel: ListCharacterViewModel
+    private lateinit var adapter: CharacterAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        viewModel = ViewModelProvider(this)[ListCharacterViewModel::class.java]
         return inflater.inflate(R.layout.fragment_list_character, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        adapter = CharacterAdapter()
+
+        rcView_characters.setHasFixedSize(true)
+        rcView_characters.layoutManager = GridLayoutManager(requireContext(), 2)
+        rcView_characters.adapter = adapter
+
+        lifecycleScope.launch {
+            viewModel.getCharacters(adapter)
+        }
     }
 
     companion object {

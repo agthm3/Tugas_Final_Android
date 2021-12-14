@@ -12,19 +12,21 @@ class ListCharacterViewModel: ViewModel() {
     private val TAG = "ListCharacterViewModel"
     private var listCharacter = mutableListOf<Character>()
 
-    suspend fun getCharacters() {
+    suspend fun getCharacters(adapter: CharacterAdapter) {
         if(listCharacter.isEmpty()) {
             var response: Response<DataCharacter>? = null
             try {
                 response = RetrofitClient.instance.getCharacters()
                 if(response.isSuccessful) {
-
+                    adapter.setData(response!!.body()!!.data as MutableList<Character>)
+                } else {
+                    Log.e(TAG, "${response!!.message()}")
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "${e.message}")
             }
         } else {
-
+            adapter.setData(listCharacter)
         }
     }
 

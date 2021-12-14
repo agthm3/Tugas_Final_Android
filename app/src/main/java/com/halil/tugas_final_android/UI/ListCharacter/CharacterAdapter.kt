@@ -25,6 +25,11 @@ class CharacterAdapter: RecyclerView.Adapter<CharacterAdapter.Holder>() {
         }
     }
 
+    fun setData(list: MutableList<Character>) {
+        this.listCharacter = list
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_character, parent, false)
         return Holder(view)
